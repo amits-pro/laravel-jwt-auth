@@ -80,7 +80,10 @@ class RegisterController extends Controller
         ]);
 
         if($validator->fails()){
-                return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'success'=>false,
+                'errors'=>$validator->errors()
+            ],422);                
         }
 
         $user = User::create([
