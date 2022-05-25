@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,16 @@ Route::group([
 ],function(){
     Route::post("/register",[RegisterController::class,'register']);
     Route::post("/login",[LoginController::class,'login']);
+
 });
+
+
+Route::group(['middleware' => ['throttle:20,5']],function(){
+    Route::get('/movies/page/{pageId}',[MovieController::class,'movies']);
+    Route::get('/movies/{movieId}',[MovieController::class,'movie']);
+    Route::get('/search/movie',[MovieController::class,'search']);
+});
+
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/user', [UserController::class,'user']);
