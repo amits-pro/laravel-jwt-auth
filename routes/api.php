@@ -28,10 +28,10 @@ Route::group([
 });
 
 
-Route::group(['middleware' => ['throttle:20,5']],function(){
+Route::group(['middleware' => ['throttle:20,5','jwt.verify']],function(){
     Route::get('/movies/page/{pageId}',[MovieController::class,'movies']);
     Route::get('/movies/{movieId}',[MovieController::class,'movie']);
-    Route::get('/search/movie',[MovieController::class,'search']);
+    Route::get('/movie/search',[MovieController::class,'search']);
 });
 
 
